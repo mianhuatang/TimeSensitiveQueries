@@ -4,6 +4,33 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+  <servlet>
+    <servlet-name>Test</servlet-name>
+    <servlet-class>test.Test</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ListQueryServlet</servlet-name>
+    <servlet-class>web.controller.ListQueryServlet</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>ListClickServlet</servlet-name>
+    <servlet-class>web.controller.ListClickServlet</servlet-class>
+  </servlet>
+
+
+  <servlet-mapping>
+    <servlet-name>Test</servlet-name>
+    <url-pattern>/servlet/Test</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ListQueryServlet</servlet-name>
+    <url-pattern>/servlet/ListQueryServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ListClickServlet</servlet-name>
+    <url-pattern>/servlet/ListClickServlet</url-pattern>
+  </servlet-mapping>
+  
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
