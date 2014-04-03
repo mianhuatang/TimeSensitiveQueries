@@ -10,7 +10,7 @@
   </head>
   
   <body style="text-align: center;">
-    <table width="90%" frame="border">
+    <table width="100%" frame="border">
     	<tr>
     		<td>时间</td>
     		<td>点击的链接</td>

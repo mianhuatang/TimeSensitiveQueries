@@ -11,10 +11,15 @@
   
   <body style="text-align: center;">
   <form action="/TimeSensitiveQueries/servlet/ListQueryServlet">
-  	<input type="text" name="content"/>
-  	<input type="submit" value="查找">
+  	按查询内容进行查找
+  	<input type="text" name="content" width="80%"/>
+  	<!--  <input type="submit" value="查找">-->
+  	<input type="text"  name="timestart"/>
+	<input type="text"  name="timeend"/>
+	<input type="submit" value="查找"/>
+  	<!--<input type="button" name="processing" value="预处理" />-->
   </form>
-  
+ <a href="${pageContext.request.contextPath }/second.jsp" target="_blank"> Time Sensitive Query Detection and Sensitivity Calculation</a> 
     <table width="100%" frame="border">
     	<tr>
     		<td>时间</td>
@@ -28,30 +33,15 @@
 	    		<td><c:out value="${c.time }" escapeXml="true"/></td>
 	    		<td><c:out value="${c.content }" escapeXml="true"/></td>
 	    		<td><c:out value="${c.sessionID }" escapeXml="true"/></td>
-	    		
-	    		
 	    		<td>
-	    		<a href="${pageContext.request.contextPath }/servlet/ListClickServlet?id=${c.id } " target="right">查看点击信息</a>
-	    			<!-- <a href="${pageContext.request.contextPath }/servlet/UpdateCustomerUIServlet?id=${c.id }">修改</a>
-	    			
-	    			<a href="javascript:dodelete('${c.id }')">删除</a> -->
-	    			
-	    			
+	    			<a href="${pageContext.request.contextPath }/servlet/ListClickServlet?id=${c.id } " target="right">查看点击信息</a>
 	    		</td>
     		</tr>
+    		
     	</c:forEach>
     </table>
     <br/>
    	<%@include file="/public/page.jsp" %>
   </body>
-  <!--  <script type="text/javascript">
-  	function dodelete(id)
-  	{
-  		var b = window.confirm("您确认删除吗？？");
-  		if(b){
-  			window.location.href="${pageContext.request.contextPath }/servlet/DeleteCustomerServlet?id=" + id;
-  		}
-  	}
-  </script>-->
   
 </html>

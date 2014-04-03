@@ -10,8 +10,8 @@
   <body style="text-align: center;">
     
     <br/><br/>
-   <jsp:forward page="/servlet/ListQueryServlet"/>
-    
+   
+    <jsp:forward page="/servlet/ListQueryServlet"/>
    
     <!--  <a href="${pageContext.request.contextPath }/servlet/AddCustomerUIServlet" target="body">添加客户</a>-->
     <!--<a href="${pageContext.request.contextPath }/servlet/ListQueryServlet" target="body">查看客户</a>-->

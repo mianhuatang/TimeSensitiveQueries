@@ -9,7 +9,6 @@ public class Query {
 	private String id;
 	private String sessionID;
 	private int resultCount;
-//	private List<Click> clicks;
 	public Date getTime() {
 		return time;
 	}

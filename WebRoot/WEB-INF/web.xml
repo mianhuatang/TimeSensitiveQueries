@@ -16,6 +16,20 @@
     <servlet-name>ListClickServlet</servlet-name>
     <servlet-class>web.controller.ListClickServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>AlgorithmServlet</servlet-name>
+    <servlet-class>web.controller.AlgorithmServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ShowSensitivityPageServlet</servlet-name>
+    <servlet-class>web.controller.ShowSensitivityPageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ListPreprocessingServlet</servlet-name>
+    <servlet-class>web.controller.ListPreprocessingServlet</servlet-class>
+  </servlet>
+
+
 
 
   <servlet-mapping>
@@ -29,6 +43,18 @@
   <servlet-mapping>
     <servlet-name>ListClickServlet</servlet-name>
     <url-pattern>/servlet/ListClickServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AlgorithmServlet</servlet-name>
+    <url-pattern>/servlet/AlgorithmServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ShowSensitivityPageServlet</servlet-name>
+    <url-pattern>/servlet/ShowSensitivityPageServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ListPreprocessingServlet</servlet-name>
+    <url-pattern>/servlet/ListPreprocessingServlet</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>
