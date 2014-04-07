@@ -14,11 +14,10 @@ import service.impl.BusinessService;
 
 
 public class DBSCANnew {
-	double Eps = 0.65; // ����뾶
-	int MinPts = 3; // �ܶ�
+	double Eps = 0.65;
+	int MinPts = 3; 
 	public static int simMapSize=1000;
 	public static HashMap<String, HashMap<String, Double>>similarityMap=new HashMap<String,HashMap<String,Double>>();
-//	public static ArrayList<Cluster> datas= new ArrayList<Cluster>();
 	
 	public  void run(List<ProcessingQuery> pQueryDatas) throws Exception{
 		putSimilarity();
@@ -30,29 +29,42 @@ public class DBSCANnew {
 			c.setQueryID(pquery.getQueryID());
 			c.setSessionID(pquery.getSessionID());
 			c.setTimePart(pquery.getTimePart());
-			c.setTopicPart(pquery.getTimePart());
+			c.setTopicPart(pquery.getTopicPart());
 			datas.add(c);
 		}
 		dbscan(datas);
+		addClusters(datas);
 	}
 	public double getSimilarity(String queryID1, String queryID2) {
 		double sim = 0;
 		if(similarityMap.containsKey(queryID1)){
 			HashMap<String,Double> secondMap=similarityMap.get(queryID1);
-			if(secondMap.containsKey(queryID2))
+			if(secondMap!=null&&secondMap.containsKey(queryID2))
 				sim=similarityMap.get(queryID1).get(queryID2);
 		}
 		return sim;
 	}
-
-		public static void putSimilarity()  {
-			String sql="select * from sims limit 0,"+simMapSize+"";
-			BusinessService service=new BusinessService();
-			List<Sim> data=service.getData(null, sql);
-			for(int i=0;i<data.size();i++){
-				similarityMap.put(data.get(i).getQueryID1(),(HashMap<String, Double>) new HashMap().put(data.get(i).getQueryID2(), data.get(i).getSim()));
+	public void addClusters(List<Cluster> datas){
+		BusinessService service=new BusinessService();
+		service.addClusters(datas);
+	}
+	public static void putSimilarity()  {
+		String sql="select * from sims limit 0,"+simMapSize+"";
+		BusinessService service=new BusinessService();
+		List<Sim> data=service.getData(null, sql);
+		for(int i=0;data!=null&&i<data.size();i++){
+			if(!similarityMap.containsKey(data.get(i).getQueryID1())){
+				HashMap<String,Double> secondMap=new HashMap<String,Double>();
+				secondMap.put(data.get(i).getQueryID2(),data.get(i).getSim());
+				similarityMap.put(data.get(i).getQueryID1(), secondMap);
+			}
+			else{
+				HashMap<String,Double> secondMap=similarityMap.get(data.get(i).getQueryID1());
+				secondMap.put(data.get(i).getQueryID2(), data.get(i).getSim());
+				similarityMap.put(data.get(i).getQueryID1(), secondMap);
 			}
 		}
+	}
 		
 	public Vector<Cluster> getNeighbors(Cluster p,ArrayList<Cluster> objects) throws  Exception {
 		Vector<Cluster> neighbors = new Vector<Cluster>();

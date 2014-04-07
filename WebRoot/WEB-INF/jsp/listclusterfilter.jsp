@@ -6,16 +6,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title>显示预处理结果</title>
+    <title>显示聚类信息</title>
   </head>
   
   <body style="text-align: center;">
-  	<h1>预处理结果</h1>
+  	<h1>过滤后的聚类结果</h1>
     <table width="100%" frame="border">
     	<tr>
-    		<td>预处理后的查询</td>
-    		<td>原始查询</td>
+    		<td>clusterID</td>
     		<td>queryID</td>
+    		<td>原始查询</td>
+    		<td>预处理后的查询</td>
     		<td>sessionID</td>
     		<td>topicPart</td>
     		<td>timePart</td>
@@ -23,9 +24,10 @@
     	
     	<c:forEach var="c" items="${page.list}">
     		<tr>
-	    		<td><c:out value="${c.pQuery }" escapeXml="true"/></td>
+    			<td><c:out value="${c.clusterID }" escapeXml="true"/></td>
+    			<td><c:out value="${c.queryID }" escapeXml="true"/></td>
 	    		<td><c:out value="${c.content }" escapeXml="true"/></td>
-	    		<td><c:out value="${c.queryID }" escapeXml="true"/></td>
+	    		<td><c:out value="${c.pQuery }" escapeXml="true"/></td>
 	    		<td><c:out value="${c.sessionID }" escapeXml="true"/></td>
 	    		<td><c:out value="${c.topicPart }" escapeXml="true"/></td>
 	    		<td><c:out value="${c.timePart }" escapeXml="true"/></td>

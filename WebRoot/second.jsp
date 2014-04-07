@@ -12,7 +12,7 @@
   <body style="text-align: center;">
   	<iframe src="${pageContext.request.contextPath }/secondtop.jsp" name="top" width="20%" height="100%" frameborder="0">
   	</iframe>
-  	<iframe src="${pageContext.request.contextPath }/secondbottom.jsp" name="bottom" width="78%" height="100%" frameborder="0" marginheight="50px">
+  	<iframe src="${pageContext.request.contextPath }/secondbottom.jsp" name="bottom" width="78%" height="100%" frameborder="0" >
   	</iframe>
   </body>
   

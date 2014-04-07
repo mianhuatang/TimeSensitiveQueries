@@ -65,7 +65,7 @@ public class Extract {
 		}
 		String removequery="";
 		for(String remove:RemoveList){
-			removequery+=remove+" ";
+			removequery+=remove+"#";
 		}
 		removequery.trim();//timePart
 		

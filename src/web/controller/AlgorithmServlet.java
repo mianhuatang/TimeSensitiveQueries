@@ -14,7 +14,9 @@ import domain.ProcessingQuery;
 import domain.Query;
 
 import service.impl.BusinessService;
+import utils.algorithm.cluster.DBSCANnew;
 import utils.algorithm.extract.Extract;
+import utils.algorithm.filter.ClusterFilterNoises;
 import utils.algorithm.similarity.CalculateSimilarity;
 
 
@@ -51,12 +53,21 @@ public class AlgorithmServlet extends HttpServlet {
 			}
 		}
 		else if(value!=null&&value.equals("开始聚类")){
-			String sql="select * from precessing limit ?,?";
-			String totalSql="select count(*) from precessing ";
+			String sql="select * from processing limit ?,?";
+			String totalSql="select count(*) from processing ";
 			int totalRecord=service.getTotalrecord(totalSql);
 			List<ProcessingQuery> pQuerys=service.getData(0, totalRecord, sql);
 			CalculateSimilarity.CalSim(pQuerys);
-			
+			DBSCANnew dbscan=new DBSCANnew();
+			try {
+				dbscan.run(pQuerys);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(value!=null&&value.equals("开始过滤")){
+			ClusterFilterNoises.filter();
 		}
 		request.getRequestDispatcher("/secondtop.jsp").forward(request, response);
 	}

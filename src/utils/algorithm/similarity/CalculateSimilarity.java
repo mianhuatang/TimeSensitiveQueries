@@ -7,6 +7,7 @@ import java.util.List;
 import service.impl.BusinessService;
 import domain.Click;
 import domain.ProcessingQuery;
+import domain.Sim;
 
 
 public class CalculateSimilarity {
@@ -14,12 +15,20 @@ public class CalculateSimilarity {
 	public static HashMap<String, HashMap<String, Double>>sessionSimMap=new HashMap<String,HashMap<String,Double>>();
 	
 	public static void CalSim(List<ProcessingQuery> pQuerys){
-		List<double[]>sims=new ArrayList<double[]>();
+		List<Sim>sims=new ArrayList<Sim>();
 		BusinessService service=new BusinessService();
 		int pQuerysSize=pQuerys.size();
 		for(int i=0;i<pQuerysSize-1;i++){
 			for(int j=i+1;j<pQuerysSize;j++){
-				double []sim=CalSim(pQuerys.get(i),pQuerys.get(j));
+				double []simArray=CalSim(pQuerys.get(i),pQuerys.get(j));
+				Sim sim=new Sim();
+				sim.setQueryID1(pQuerys.get(i).getQueryID());
+				sim.setQueryID2(pQuerys.get(j).getQueryID());
+				sim.setSim(simArray[0]);
+				sim.setQuerySim(simArray[1]);
+				sim.setUrlSim(simArray[2]);
+				sim.setSessionSim(simArray[3]);
+				sim.setProbaseSim(simArray[4]);
 				sims.add(sim);
 				if(sims.size()==simSize){
 					service.addSims(sims);
@@ -65,15 +74,17 @@ public class CalculateSimilarity {
 	public static double CalUrlDiceSim(List<Click> clicks1,List<Click> clicks2){
 		double sim=0;
 		double sameCount=0;
-		int size1=clicks1.size();
-		int size2=clicks2.size();
-		for(int i=0;i<size1;i++){
-			for(int j=0;j<size2;j++){
-				if(clicks1.get(i).getUrl().equals(clicks2.get(j).getUrl()))
-					sameCount++;
+		if(clicks1!=null&&clicks2!=null){
+			int size1=clicks1.size();
+			int size2=clicks2.size();
+			for(int i=0;i<size1;i++){
+				for(int j=0;j<size2;j++){
+					if(clicks1.get(i).getUrl().equals(clicks2.get(j).getUrl()))
+						sameCount++;
+				}
 			}
+			sim=2*sameCount/(size1+size2);
 		}
-		sim=2*sameCount/(size1+size2);
 		return sim;
 	}
 	public double CalSessionDocSim(List<ProcessingQuery>queries1 ,List<ProcessingQuery>queries2){

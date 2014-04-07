@@ -15,7 +15,9 @@ import java.util.Properties;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import domain.Cluster;
 import domain.ProcessingQuery;
+import domain.Sim;
 
 
 
@@ -93,7 +95,7 @@ public class JdbcUtils {
 		try{
 			conn = getConnection();
 			st = conn.prepareStatement(sql);
-			for(int i=0;i<params.length;i++){
+			for(int i=0;params!=null&&i<params.length;i++){
 				st.setObject(i+1, params[i]);
 			}
 			rs = st.executeQuery();
@@ -122,21 +124,65 @@ public class JdbcUtils {
 		st.close();
 		conn.close();
 	}
-	public static void addSims(List<double[]>sims) throws SQLException{
+	public static void addSims(List<Sim>sims) throws SQLException{
 		Connection conn = null;
 		conn = getConnection();
 		conn.setAutoCommit(false);
 		PreparedStatement st = conn.prepareStatement("insert into sims (sim,queryID1,queryID2,querySim,urlSim,sessionSim,probaseSim) values (?,?,?,?,?,?,?)");
 		for(int i=0;i<sims.size();i++){
-			double[] sim=sims.get(i);
+			Sim sim=sims.get(i);
 			st.clearParameters();
-			st.setDouble(1, sim[0]);
-			st.setDouble(2, sim[1]);
-			st.setDouble(3, sim[2]);
-			st.setDouble(4, sim[3]);
-			st.setDouble(5, sim[4]);
-			st.setDouble(6, sim[5]);
-			st.setDouble(7, sim[6]);
+			st.setDouble(1, sim.getSim());
+			st.setString(2, sim.getQueryID1());
+			st.setString(3, sim.getQueryID2());
+			st.setDouble(4, sim.getQuerySim());
+			st.setDouble(5, sim.getUrlSim());
+			st.setDouble(6, sim.getSessionSim());
+			st.setDouble(7, sim.getProbaseSim());
+			st.execute();
+		}
+		
+		conn.commit();
+		st.close();
+		conn.close();
+	}
+	public static void addClusters(List<Cluster> clusters) throws SQLException{
+		Connection conn = null;
+		conn = getConnection();
+		conn.setAutoCommit(false);
+		PreparedStatement st = conn.prepareStatement("insert into clusters " +
+				"(clusterID,content,queryID,pQuery,topicPart,timePart,sessionID) values (?,?,?,?,?,?,?)");
+		for(Cluster c:clusters){
+			st.clearParameters();
+			st.setLong(1, c.getClusterID());
+			st.setString(2, c.getContent());
+			st.setString(3, c.getQueryID());
+			st.setString(4, c.getpQuery());
+			st.setString(5, c.getTopicPart());
+			st.setString(6, c.getTimePart());
+			st.setString(7, c.getSessionID());
+			st.execute();
+		}
+		
+		conn.commit();
+		st.close();
+		conn.close();
+	}
+	public static void addClustersFilter(List<Cluster> clusters) throws SQLException{
+		Connection conn = null;
+		conn = getConnection();
+		conn.setAutoCommit(false);
+		PreparedStatement st = conn.prepareStatement("insert into clusters_filter " +
+				"(clusterID,content,queryID,pQuery,topicPart,timePart,sessionID) values (?,?,?,?,?,?,?)");
+		for(Cluster c:clusters){
+			st.clearParameters();
+			st.setLong(1, c.getClusterID());
+			st.setString(2, c.getContent());
+			st.setString(3, c.getQueryID());
+			st.setString(4, c.getpQuery());
+			st.setString(5, c.getTopicPart());
+			st.setString(6, c.getTimePart());
+			st.setString(7, c.getSessionID());
 			st.execute();
 		}
 		

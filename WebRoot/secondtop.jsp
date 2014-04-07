@@ -29,6 +29,11 @@
   		<br/>
   		<input type="submit" value="开始过滤" name="test" />
   		<br/>
+  		<a href="${pageContext.request.contextPath }/servlet/ListClusterFilterServlet" target="bottom">显示聚类结果</a>
+  		<br/>
+  		<br/>
+  		<br/>
+  		<br/>
   	</form>
   	<br/>
   	

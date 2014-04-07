@@ -28,6 +28,16 @@
     <servlet-name>ListPreprocessingServlet</servlet-name>
     <servlet-class>web.controller.ListPreprocessingServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ListClusterServlet</servlet-name>
+    <servlet-class>web.controller.ListClusterServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ListClusterFilterServlet</servlet-name>
+    <servlet-class>web.controller.ListClusterFilterServlet</servlet-class>
+  </servlet>
+
+
 
 
 
@@ -55,6 +65,14 @@
   <servlet-mapping>
     <servlet-name>ListPreprocessingServlet</servlet-name>
     <url-pattern>/servlet/ListPreprocessingServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ListClusterServlet</servlet-name>
+    <url-pattern>/servlet/ListClusterServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ListClusterFilterServlet</servlet-name>
+    <url-pattern>/servlet/ListClusterFilterServlet</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>

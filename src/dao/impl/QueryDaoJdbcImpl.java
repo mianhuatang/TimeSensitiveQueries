@@ -9,6 +9,7 @@ import utils.IntegerHandler;
 import utils.JdbcUtils;
 
 import domain.Click;
+import domain.Cluster;
 import domain.ProcessingQuery;
 import domain.Query;
 import domain.Sim;
@@ -29,6 +30,8 @@ public class QueryDaoJdbcImpl {
 				return (List) JdbcUtils.query(sql, params, new BeanListHandler(Click.class));
 			if(sql.contains("processing"))
 				return (List) JdbcUtils.query(sql, params, new BeanListHandler(ProcessingQuery.class));
+			if(sql.contains("clusters")||sql.contains("clusters_filter"))
+				return (List) JdbcUtils.query(sql, params, new BeanListHandler(Cluster.class));
 			return null;
 		}catch (Exception e) {
 			 throw new DaoException(e);
@@ -42,8 +45,10 @@ public class QueryDaoJdbcImpl {
 				return (List) JdbcUtils.query(sql, params, new BeanListHandler(Click.class));
 			if(sql.contains("processing"))
 				return (List) JdbcUtils.query(sql, params, new BeanListHandler(ProcessingQuery.class));
-			if(sql.contains("Sim"))
+			if(sql.contains("sims"))
 				return (List) JdbcUtils.query(sql, params, new BeanListHandler(Sim.class));
+			if(sql.contains("clusters"))
+				return (List) JdbcUtils.query(sql, params, new BeanListHandler(Cluster.class));
 			return null;
 		}catch (Exception e) {
 			 throw new DaoException(e);
@@ -65,9 +70,25 @@ public class QueryDaoJdbcImpl {
 			 throw new DaoException(e);
 		}
 	}
-	public void addSims(List<double[]>sims){
+	public void addSims(List<Sim>sims){
 		try {
 			JdbcUtils.addSims(sims);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void addClusters(List<Cluster> clusters){
+		try {
+			JdbcUtils.addClusters(clusters);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void addClustersFilter(List<Cluster> clusters){
+		try {
+			JdbcUtils.addClustersFilter(clusters);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

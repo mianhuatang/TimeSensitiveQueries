@@ -4,9 +4,11 @@ import java.util.List;
 
 
 import dao.impl.QueryDaoJdbcImpl;
+import domain.Cluster;
 import domain.Page;
 import domain.ProcessingQuery;
 import domain.Query;
+import domain.Sim;
 
 public class BusinessService {
 
@@ -43,7 +45,13 @@ public class BusinessService {
 	public void addPquerys(List<ProcessingQuery> data){
 		dao.addPquerys(data);
 	}
-	public  void addSims(List<double[]>sims){
+	public  void addSims(List<Sim>sims){
 		dao.addSims(sims);
+	}
+	public void addClusters(List<Cluster>clusters){
+		dao.addClusters(clusters);
+	}
+	public void addClustersFilter(List<Cluster>clusters){
+		dao.addClustersFilter(clusters);
 	}
 }
