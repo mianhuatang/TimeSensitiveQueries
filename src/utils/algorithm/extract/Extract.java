@@ -60,14 +60,16 @@ public class Extract {
 		content=RemoveList.get(RemoveList.size()-1);
 		RemoveList.remove(RemoveList.size()-1);
 		
-		if(RemoveList.size()==0){
-			return null;
-		}
+//		if(RemoveList.size()==0){
+//			return null;
+//		}
 		String removequery="";
-		for(String remove:RemoveList){
-			removequery+=remove+"#";
+		if(RemoveList.size()!=0){
+			for(String remove:RemoveList){
+				removequery+=remove+"#";
+			}
+			removequery.trim();//timePart
 		}
-		removequery.trim();//timePart
 		
 		ProcessingQuery pquery=new ProcessingQuery();
 		pquery.setContent(query.getContent());

@@ -33,10 +33,10 @@ public class AlgorithmServlet extends HttpServlet {
 			String totalSql="select count(*) from queries ";
 			String sql="select * from queries  limit ?,?";
 			int totalRecord=service.getTotalrecord(totalSql);
-			totalRecord=1000;
+//			totalRecord=1000;
 			System.out.println(totalRecord);
 			int currentIndex=0;
-			int size=100;
+			int size=5000;
 			while(currentIndex<totalRecord){
 				List <Query> data=service.getData(currentIndex, size, sql);
 				List<ProcessingQuery> pQuerys=new ArrayList<ProcessingQuery>();

@@ -7,6 +7,7 @@ import java.util.List;
 import service.impl.BusinessService;
 import domain.Click;
 import domain.ProcessingQuery;
+import domain.Query;
 import domain.Sim;
 
 
@@ -57,6 +58,21 @@ public class CalculateSimilarity {
 		sims[0]=0.93*querySim+0.13*urlSim+0.46*sessionSim+0.97*probaseSim;
 		return sims;
 	}
+	public static List<Click> findClicks(String queryID){
+		BusinessService service=new BusinessService();
+		String sql="select * from clicks where queryID='"+queryID+"'";
+		List<Click> clicks=service.getData(null,  sql);
+		return clicks;
+	}
+	public static String findPQuery(String queryID){
+		BusinessService service=new BusinessService();
+		String sql="select * from processing where queryID='"+queryID+"'";
+		List<ProcessingQuery> queries=service.getData(null,  sql);
+		if(queries!=null)
+			return queries.get(1).getpQuery();
+		else
+			return null;
+	}
 	public static double CalQueryDiceSim(String pquery,String qquery){
 		double sim=0;
 		String []pqueryArray=pquery.split(" ");
@@ -106,10 +122,16 @@ public class CalculateSimilarity {
 		
 		return sim;
 	}
-	public double CalSessionSim(String session1,String session2){
+	public static double CalSessionSim(String session1,String session2){
 		if(session1.equals(session2))
 			return 1;
 		else
 			return 0;
+	}
+	public static double CalSessionDocumentSim(String sessionDocument1,String sessionDocument2){
+		return 0;
+	}
+	public static double CalProbaseSession(String content1,String content2){
+		return 0;
 	}
 }

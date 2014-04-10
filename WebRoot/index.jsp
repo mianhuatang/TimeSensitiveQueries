@@ -7,7 +7,7 @@
     <title>首页</title>
   </head>
   <body>
-  <h1 align="center">Time Sensitive Query</h1>
+  <h1 align="center">Time Sensitive Query Detection</h1>
   
   
   <iframe src="${pageContext.request.contextPath }/left.jsp" name="left" width="70%" height="80%" frameborder="0">

@@ -1,5 +1,6 @@
 package dao.impl;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -54,6 +55,14 @@ public class QueryDaoJdbcImpl {
 			 throw new DaoException(e);
 		}
 	}
+	public  ResultSet query(String sql,Object params[]){
+		try {
+			return JdbcUtils.query(sql, params);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new DaoException(e);
+		}
+	}
 	public int getTotalrecord(String sql){
 		try{
 			Object params[] = {};
@@ -89,6 +98,14 @@ public class QueryDaoJdbcImpl {
 	public void addClustersFilter(List<Cluster> clusters){
 		try {
 			JdbcUtils.addClustersFilter(clusters);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void update(String sql,Object params[]){
+		try {
+			JdbcUtils.update(sql, params);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

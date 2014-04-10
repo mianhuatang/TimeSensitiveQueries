@@ -1,17 +1,12 @@
 package utils;
 
-import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -105,6 +100,22 @@ public class JdbcUtils {
 			release(conn, st, rs);
 		}
 	}
+	public static ResultSet query(String sql,Object params[]) throws SQLException{
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+			conn = getConnection();
+			st = conn.prepareStatement(sql);
+			for(int i=0;params!=null&&i<params.length;i++){
+				st.setObject(i+1, params[i]);
+			}
+			rs = st.executeQuery();
+			return rs;
+		}finally{
+			release(conn, st, rs);
+		}
+	}
 	public static void addPquerys(List <ProcessingQuery> data) throws SQLException{
 		Connection conn = null;
 		conn = getConnection();
@@ -187,6 +198,26 @@ public class JdbcUtils {
 		}
 		
 		conn.commit();
+		st.close();
+		conn.close();
+	}
+	public static void addSessionID(HashMap data) throws SQLException{
+		
+		Connection conn =null;
+		//Connection conn=DriverManager.getConnection(null);
+		conn = getConnection();
+		conn.setAutoCommit(false);
+		PreparedStatement st = conn.prepareStatement("insert into sessions (sessionID,content) values (?, ?)");
+		for (Object obj : data.keySet()) {
+			String key = (String) obj;
+			String value = (String) data.get(key);
+			st.setString(1, key);
+			st.setString(2, value);
+			st.addBatch();
+		}
+		st.executeBatch();
+		conn.commit();
+		st.clearBatch();
 		st.close();
 		conn.close();
 	}

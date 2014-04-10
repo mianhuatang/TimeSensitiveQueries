@@ -33,6 +33,13 @@
   		<br/>
   		<br/>
   		<br/>
+  		<input type="checkbox" name="sensitivity" value="sing"/>最小间隔法
+    	<input type="checkbox" name="sensitivity" value="dance"/>最频繁间隔法<br/>
+    	<input type="checkbox" name="sensitivity" value="baseketball"/>编辑距离法
+    	<input type="checkbox" name="sensitivity" value="football">带权重编辑距离法<br/>
+  		<input type="submit" value="开始计算周期" name="test" />
+  		<br/>
+  		<a href="${pageContext.request.contextPath }/servlet/ListClusterFilterServlet" target="bottom">显示周期计算结果</a>
   		<br/>
   	</form>
   	<br/>

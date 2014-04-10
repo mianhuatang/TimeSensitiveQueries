@@ -1,5 +1,6 @@
 package service.impl;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 
@@ -42,6 +43,9 @@ public class BusinessService {
 	public List getData(Object[]params,String sql){
 		return dao.getData(params, sql);
 	}
+	public ResultSet query(String sql,Object params[]){
+		return dao.query(sql, params);
+	}
 	public void addPquerys(List<ProcessingQuery> data){
 		dao.addPquerys(data);
 	}
@@ -53,5 +57,8 @@ public class BusinessService {
 	}
 	public void addClustersFilter(List<Cluster>clusters){
 		dao.addClustersFilter(clusters);
+	}
+	public void update(String sql,Object params[]){
+		dao.update(sql, params);
 	}
 }

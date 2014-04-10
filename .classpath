@@ -10,5 +10,9 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mchange-commons-0.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/standard.jar"/>
+	<classpathentry kind="lib" path="F:/research/111/time-sensitive query/代码/lucene-4.0.0/analysis/common/lucene-analyzers-common-4.0.0.jar"/>
+	<classpathentry kind="lib" path="F:/research/111/time-sensitive query/代码/lucene-4.0.0/core/lucene-core-4.0.0.jar"/>
+	<classpathentry kind="lib" path="F:/research/111/time-sensitive query/代码/lucene-4.0.0/queryparser/lucene-queryparser-4.0.0.jar"/>
+	<classpathentry kind="lib" path="F:/research/111/time-sensitive query/代码/lucene-4.0.0/queries/lucene-queries-4.0.0.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
