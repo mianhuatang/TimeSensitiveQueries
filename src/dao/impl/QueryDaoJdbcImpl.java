@@ -25,12 +25,13 @@ public class QueryDaoJdbcImpl {
 		try{
 			
 			Object params[] = {startindex,pagesize};
+			if(sql.contains("processing"))
+				return (List) JdbcUtils.query(sql, params, new BeanListHandler(ProcessingQuery.class));
 			if(sql.contains("queries"))
 				return (List) JdbcUtils.query(sql, params, new BeanListHandler(Query.class));
 			if(sql.contains("clicks"))
 				return (List) JdbcUtils.query(sql, params, new BeanListHandler(Click.class));
-			if(sql.contains("processing"))
-				return (List) JdbcUtils.query(sql, params, new BeanListHandler(ProcessingQuery.class));
+			
 			if(sql.contains("clusters")||sql.contains("clusters_filter"))
 				return (List) JdbcUtils.query(sql, params, new BeanListHandler(Cluster.class));
 			return null;

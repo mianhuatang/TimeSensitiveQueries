@@ -10,10 +10,17 @@
   </head>
   
   <body style="text-align: left">
-  	<form action="/TimeSensitiveQueries/servlet/AlgorithmServlet" method="post">
+  <%String key="";
+  	key=request.getParameter("content");
+  	String time1="";
+  	time1=request.getParameter("timestart");
+  	String time2="";
+  	time2=request.getParameter("timeend");
+  %>
+  	<form action="/TimeSensitiveQueries/servlet/AlgorithmServlet?content=<%=key %>&timestart=<%=time1 %>&timeend=<%=time2 %>" method="post">
   		<input type="submit" value="开始预处理" name="test" />
   		<br/>
-  		<a href="${pageContext.request.contextPath }/servlet/ListPreprocessingServlet" target="bottom">显示预处理结果</a>
+  		<a href="${pageContext.request.contextPath }/servlet/ListPreprocessingServlet?content=<%=key %>&timestart=<%=time1 %>&timeend=<%=time2 %>" target="bottom">显示预处理结果</a>
   		<br/>
   		<br/>
   		<br/>

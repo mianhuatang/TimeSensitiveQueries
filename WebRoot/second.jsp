@@ -10,9 +10,16 @@
   </head>
   
   <body style="text-align: center;">
-  	<iframe src="${pageContext.request.contextPath }/secondtop.jsp" name="top" width="20%" height="100%" frameborder="0">
+  <%String key="";
+  	key=request.getParameter("content");
+  	String time1="";
+  	time1=request.getParameter("timestart");
+  	String time2="";
+  	time2=request.getParameter("timeend");
+   %>
+  	<iframe src="${pageContext.request.contextPath }/secondtop.jsp?content=<%=key %>&timestart=<%=time1 %>&timeend=<%=time2 %>" name="top" width="20%" height="100%" frameborder="0">
   	</iframe>
-  	<iframe src="${pageContext.request.contextPath }/secondbottom.jsp" name="bottom" width="78%" height="100%" frameborder="0" >
+  	<iframe src="${pageContext.request.contextPath }/secondbottom.jsp?content=<%=key %>&timestart=<%=time1 %>&timeend=<%=time2 %>" name="bottom" width="78%" height="100%" frameborder="0" >
   	</iframe>
   </body>
   

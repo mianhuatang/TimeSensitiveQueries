@@ -17,9 +17,13 @@
     		<td>位置</td>
  
     	</tr>
-    	
+    	<%int count=0; %>
     	<c:forEach var="c" items="${page.list}">
-    		<tr>
+    	<%if(count%2==0){ %>
+    		<tr style="background-color: #4F96C0">
+    	<%}else{ %>	
+    	<tr  >
+    	<%} count++; %>
 	    		<td><c:out value="${c.time }" escapeXml="true"/></td>
 	    		<td><c:out value="${c.url }" escapeXml="true"/></td> 
 	    		<td><c:out value="${c.position }" escapeXml="true"/></td>

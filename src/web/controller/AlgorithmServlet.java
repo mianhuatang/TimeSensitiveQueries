@@ -27,14 +27,47 @@ public class AlgorithmServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String value=request.getParameter("test");
-		System.out.println(value);
+//		String content=(String) request.getAttribute("content");
+		
+//		String uri=request.getQueryString();
+		String fromURL = request.getHeader("Referer");
+		String[]parameterArray=fromURL.split("\\?")[1].split("\\&");
+		String content=(parameterArray[0].split("\\=").length==2)?parameterArray[0].split("\\=")[1]:null;
+		String timestart=(parameterArray[1].split("\\=").length==2)?parameterArray[1].split("\\=")[1]:null;
+		String timeend=(parameterArray[2].split("\\=").length==2)?parameterArray[2].split("\\=")[1]:null;
 		BusinessService service = new BusinessService();
 		if(value!=null&&value.equals("开始预处理")){
-			String totalSql="select count(*) from queries ";
-			String sql="select * from queries  limit ?,?";
+			String totalSql="select count(*) from queries,query_status where queries.id=query_status.queryID and status=0  ";
+			String sql="select queries.* from queries,query_status where queries.id=query_status.queryID and status=0     ";
+			if(content!=null&&content.trim().length()!=0&&content.trim()!="null"){
+				sql+="and content='"+content+"'";
+				totalSql+="and content='"+content+"'";
+				if(timestart!=null&&timestart.trim().length()!=0&&timestart.trim()!="null"){
+					sql+=" and time>=convert('"+timestart+"',Date)";
+					totalSql+=" and time>=convert('"+timestart+"',Date)";
+				}
+				if(timeend!=null&&timeend.trim().length()!=0&&timeend.trim()!="null"){
+					sql+=" and time<=convert('"+timeend+"',Date)";
+					totalSql+=" and time<=convert('"+timeend+"',Date)";
+				}
+			}
+			else if(timestart!=null&&timestart.trim().length()!=0&&timestart.trim()!="null"){
+				sql+=" where time>=convert('"+timestart+"',Date)";
+				totalSql+=" where time>=convert('"+timestart+"',Date)";
+				if(timeend!=null&&timeend.trim().length()!=0&&timeend.trim()!="null"){
+					sql+=" and time<=convert('"+timeend+"',Date)";
+					totalSql+=" and time<=convert('"+timeend+"',Date)";
+				}
+			}
+			else if(timeend!=null&&timeend.trim().length()!=0&&timeend.trim()!="null"){
+				sql+=" and time<=convert('"+timeend+"',Date)";
+				totalSql+=" and time<=convert('"+timeend+"',Date)";
+			}
+			sql+=" limit ?,?";
+			System.out.println(sql);
 			int totalRecord=service.getTotalrecord(totalSql);
 //			totalRecord=1000;
-			System.out.println(totalRecord);
+//			System.out.println(totalRecord);
 			int currentIndex=0;
 			int size=5000;
 			while(currentIndex<totalRecord){
@@ -47,8 +80,20 @@ public class AlgorithmServlet extends HttpServlet {
 						System.out.println("timePart:"+pquery.getTimePart());
 					}
 				}
-				System.out.println(pQuerys.size());
+//				System.out.println(pQuerys.size());
 				service.addPquerys(pQuerys);
+				StringBuffer queryIDStr=new StringBuffer();
+				for(int i=0;pQuerys!=null&&i<pQuerys.size();i++){
+					if(i!=0)
+						queryIDStr.append(",");
+					queryIDStr.append("'");
+					queryIDStr.append(pQuerys.get(i).getQueryID());
+					queryIDStr.append("'");
+					
+				}
+				String updateSql="update query_status set status=1 where queryID in ("+queryIDStr+")";
+				System.out.println(updateSql);
+				service.update(updateSql, null);
 				currentIndex+=size;
 			}
 		}

@@ -26,7 +26,7 @@ public class indexCluster {
 		BusinessService service=new BusinessService();
 		int currentIndex=0;
 		int size=10000;
-		String sql="select id,sessions.sessionID, content from queries,sessions where queries.sessionID=sessions.sessionID limit ?,?";
+		String sql="select id,sessions.sessionID, sessions.content from queries,sessions where queries.sessionID=sessions.sessionID limit ?,?";
 		Object[]params={currentIndex,size};
 		ResultSet re=service.query(sql, params);
 		try {

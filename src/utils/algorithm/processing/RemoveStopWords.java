@@ -21,7 +21,7 @@ public class RemoveStopWords {
 	List<String>StopWordList=new ArrayList<String>();
 	public void IniStopWordList(String FilePath) throws IOException{
 		FileReader stopwordfr=new FileReader(FilePath);
-		BufferedReader stopwordinput =new BufferedReader(stopwordfr, 20 * 1024 * 1024);
+		BufferedReader stopwordinput =new BufferedReader(stopwordfr, 1024 * 1024);
 		String stopwordline="";
 		while((stopwordline=stopwordinput.readLine())!=null){
 			StopWordList.add(stopwordline);

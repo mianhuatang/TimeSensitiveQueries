@@ -25,36 +25,45 @@ public class ListQueryServlet extends HttpServlet {
 			String timeend=request.getParameter("timeend");
 			String pagenum = request.getParameter("pagenum");
 			BusinessService service = new BusinessService();
-			//System.out.println(timestart);
 			String serletName = this.getServletName();
 			Page page=null;
 			String sql=null;
 			String totalSql=null;
-			if(content==null || content.trim().length()==0 ){
-				sql="select * from queries  limit ?,?";
-				totalSql="select count(*) from queries ";
-				page = service.getPageData(pagenum,request.getContextPath() + "/servlet/" + serletName,sql,totalSql);
+			sql="select * from queries ";
+			totalSql="select count(*) from queries ";
+			if(content!=null&&content.trim().length()!=0&&content.trim()!="null"){
+				sql+="where content='"+content+"'";
+				totalSql+="where content='"+content+"'";
+				if(timestart!=null&&timestart.trim().length()!=0&&timestart.trim()!="null"){
+					sql+=" and time>=convert('"+timestart+"',Date)";
+					totalSql+=" and time>=convert('"+timestart+"',Date)";
+				}
+				if(timeend!=null&&timeend.trim().length()!=0&&timeend.trim()!="null"){
+					sql+=" and time<=convert('"+timeend+"',Date)";
+					totalSql+=" and time<=convert('"+timeend+"',Date)";
+				}
 			}
-			else if(content!=null && content.trim().length()!=0){
-				sql="select * from queries where content='"+content+"' limit ?,?";
-				totalSql="select count(*) from queries where content='"+content+"'";
-				page = service.getPageData(pagenum,request.getContextPath() + "/servlet/" + serletName,sql,totalSql);
+			else if(timestart!=null&&timestart.trim().length()!=0&&timestart.trim()!="null"){
+				sql+=" where time>=convert('"+timestart+"',Date)";
+				totalSql+=" where time>=convert('"+timestart+"',Date)";
+				if(timeend!=null&&timeend.trim().length()!=0&&timeend.trim()!="null"){
+					sql+=" and time<=convert('"+timeend+"',Date)";
+					totalSql+=" and time<=convert('"+timeend+"',Date)";
+				}
 			}
-			if(page!=null && timestart!=null && timestart.trim().length()!=0 && timeend!=null && timeend.trim().length()!=0){
-				sql="select * from queries where time>=convert('"+timestart+"',Date) and time<=convert('"+timeend+"',Date) limit ?,?";
-				//System.out.println(sql);
-				totalSql="select count(* ) from queries where time>=convert('"+timestart+"',Date) and time<=convert('"+timeend+"',Date)";
-				page = service.getPageData(pagenum,request.getContextPath() + "/servlet/" + serletName,sql,totalSql);
+			else if(timeend!=null&&timeend.trim().length()!=0&&timeend.trim()!="null"){
+				sql+=" and time<=convert('"+timeend+"',Date)";
+				totalSql+=" and time<=convert('"+timeend+"',Date)";
 			}
+			sql+=" limit ?,?";
+			page = service.getPageData(pagenum,request.getContextPath() + "/servlet/" + serletName,sql,totalSql);
 			request.setAttribute("page", page);
 			request.getRequestDispatcher("/WEB-INF/jsp/listquery.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("message", "查询失败！！！");
 			request.getRequestDispatcher("/message.jsp").forward(request, response);
-			
 		}
-		
 	}
 
 	

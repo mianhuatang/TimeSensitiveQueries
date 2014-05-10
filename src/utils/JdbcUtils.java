@@ -70,7 +70,7 @@ public class JdbcUtils {
 		try{
 			conn = getConnection();
 			st = conn.prepareStatement(sql);
-			for(int i=0;i<params.length;i++){
+			for(int i=0;params!=null&&i<params.length;i++){
 				st.setObject(i+1, params[i]);
 			}
 			st.executeUpdate();
