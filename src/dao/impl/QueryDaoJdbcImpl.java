@@ -13,6 +13,7 @@ import domain.Click;
 import domain.Cluster;
 import domain.ProcessingQuery;
 import domain.Query;
+import domain.Sensitivity;
 import domain.Sim;
 import exception.DaoException;
 
@@ -34,6 +35,8 @@ public class QueryDaoJdbcImpl {
 			
 			if(sql.contains("clusters")||sql.contains("clusters_filter"))
 				return (List) JdbcUtils.query(sql, params, new BeanListHandler(Cluster.class));
+			if(sql.contains("sensitivity"))
+				return (List) JdbcUtils.query(sql, params, new BeanListHandler(Sensitivity.class));
 			return null;
 		}catch (Exception e) {
 			 throw new DaoException(e);

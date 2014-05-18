@@ -58,6 +58,25 @@ public class queryIndex {
 			e.printStackTrace();
 		}
 	}
+	public void update(IndexObject instance){
+		IndexWriter writer=null;
+		try {
+			dir=FSDirectory.open(new File(indexPath));  
+			writer=getWriter(); 
+			List<Document>docs=new ArrayList<Document>();
+			Document doc=new Document();
+	        doc.add(new StringField("queryID",instance.getQueryID(),Store.YES));
+	        doc.add(new StringField("sessionID",instance.getSessionID(),Store.YES));
+	        doc.add(new TextField("sessionDocument",instance.getSessionDocument(),Store.NO));
+	        docs.add(doc);
+			writer.addDocuments(docs);
+			writer.commit();
+			writer.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
 	public List<String> queryIDs(String queryStr){
 		List<String> res=new ArrayList<String>();
 		IndexReader reader=null;

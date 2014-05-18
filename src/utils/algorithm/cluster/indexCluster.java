@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import domain.IndexObject;
+
 import service.impl.BusinessService;
 import utils.algorithm.index.queryIndex;
 import utils.algorithm.similarity.CalculateSimilarity;
@@ -36,6 +38,12 @@ public class indexCluster {
 				String sessionDocument=re.getString(3);
 				
 				queryIndex qindex=new queryIndex();
+				IndexObject instance=new IndexObject();
+				instance.setQueryID(queryID);
+				instance.setSessionID(sessionID);
+				instance.setSessionDocument(sessionDocument);
+				
+				qindex.update(instance);
 				List<String> queryIDs=qindex.queryIDs(sessionDocument);
 				setClusterID(queryID,queryIDs);
 				
@@ -75,7 +83,8 @@ public class indexCluster {
 				double sessionSim=CalculateSimilarity.CalSessionDocumentSim(sessionDocument1,sessionDocument2);
 				double probaseSim=CalculateSimilarity.CalProbaseSession(pQuery1, pQuery2);
 				
-				double sim=0.93*querySim+0.13*urlSim+0.46*sessionSim+0.97*probaseSim;
+				double sum=querySimWeight+urlSimWeight+sessionSimWeight+probaseSimWeight;
+				double sim=(querySimWeight*querySim+urlSimWeight*urlSim+sessionSimWeight*sessionSim+probaseSimWeight*probaseSim)/sum;
 				if(sim>maxSim){
 					maxSim=sim;
 					maxQueryID=id;
@@ -87,6 +96,11 @@ public class indexCluster {
 			}
 			else{
 				int maxClusterID=getClusterID(maxQueryID);
+				if(maxClusterID==-1){
+					setClusterID(queryID,clusterID);
+					setClusterID(maxQueryID,clusterID);
+					clusterID++;
+				}
 				setClusterID(queryID,maxClusterID);
 			}
 		}

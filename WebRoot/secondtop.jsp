@@ -46,7 +46,7 @@
     	<input type="checkbox" name="sensitivity" value="football">带权重编辑距离法<br/>
   		<input type="submit" value="开始计算周期" name="test" />
   		<br/>
-  		<a href="${pageContext.request.contextPath }/servlet/ListClusterFilterServlet" target="bottom">显示周期计算结果</a>
+  		<a href="${pageContext.request.contextPath }/servlet/ListSensitivityServlet" target="bottom">显示周期计算结果</a>
   		<br/>
   	</form>
   	<br/>
